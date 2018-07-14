@@ -60,7 +60,7 @@ function getAddress(pos) {
   })
 }
 
-function searchYelp(pos, food) {
+function searchYelp(pos, food, target='body', count=2) {
   var rapid = new RapidAPI("hungryteam_5b4654e7e4b004833ec2655e", "da70f8e1-fd7f-4da4-b6be-2add1e8c39d8");
   
   rapid.call('YelpAPI', 'getBusinesses', { 
@@ -69,31 +69,49 @@ function searchYelp(pos, food) {
     'longitude': pos.lng,
     'term': food,
     'open_now': true,
-    'limit': 2
+    'limit': count
 
   }).on('success', function (res) {
     /*YOUR CODE GOES HERE*/ 
     console.log(res);
 
     if (res.total > 0) {
-      var val = res.businesses[0];
+      //var val = res.businesses[0];
+      for( var val of res.businesses ) {
+        var imgURL = val.image_url;
+        var name = val.name;
+        var address1 = val.location.display_address[0];
+        var address2 = val.location.display_address[1];
+        var phone = val.display_phone;
+        var price = val.price;
+        var rating = val.rating;
+        var yelpUrl = val.url;
 
-      var imgURL = val.image_url;
-      var name = val.name;
-      var phone = val.display_phone;
-      var price = val.price;
-      var rating = val.rating;
+        var categoriesArr = [];
+        for (var i in val.categories) {
+          categoriesArr.push(val.categories[i].title);
+        }
 
-      var $img = $('<img>').attr({
-        alt: name,
-        src: imgURL,
-        width: '300px'
-      });
-      var $h2 = $('<h2>').text( name );
+        var $img = $('<img>').attr({
+          alt: name,
+          src: imgURL,
+          width: '300px'
+        });
+        var $h2 = $('<h2>').text( name );
+        var $address1 = $('<p>').text ( address1 );
+        var $address2 = $('<p>').text ( address2 );
+        var $phone = $('<p>').text ( phone );
+        var $price = $('<span>').text( price );
+        var $categories = $('<span>').text( " - " + categoriesArr.join(", ") );
+        var $rating = $('<p>').text( rating + "/5 stars");
+      
+        var $yesBtn = $('<button>').text('Yes').addClass('yes');
+        var $noBtn = $('<button>').text('No').addClass('no');
 
-      var $div = $('<div>');
-      $div.append( $img, $h2 );
-      $('body').append($div);
+        var $div = $('<div>').addClass('yelp-div');
+        $div.append( $img, $h2 , $address1, $address2, $phone, $price, $categories, $rating, $yesBtn, $noBtn );
+        $(target).append($div);
+      }
 
     }
   }).on('error', function (res) {
@@ -151,35 +169,56 @@ function searchEdemam(food,target='body',count=2) {
       var $fat = $('<p>').text( "Fat(g): " + fat );
       var $carbs = $('<p>').text( "Carbs(g): " + carbs );
       var $protein = $('<p>').text( "Protein(g): " + protein );
-      
+      var $yesBtn = $('<button>').text('Yes').addClass('yes');
+      var $noBtn = $('<button>').text('No').addClass('no');
 
-      var $div = $('<div>');
-      $div.append( $img, $h2, $cal, $fat, $carbs, $protein, $h3, $ingDiv );
+      var $div = $('<div>').addClass('edamam-div');
+      $div.append( $img, $h2, $cal, $fat, $carbs, $protein, $h3, $ingDiv, $yesBtn, $noBtn  );
+
       $(target).append($div);  
     }
 
   });  
 }
 
-$( document ).on('click', '#test-btn', function(){
-  //console.log('hello world');
-  //searchEdemam('chicken','.col2', 10);
+
+$(document).on('click', '.yelp-div .yes', function(){
+  console.log('yelp yes');
 })
 
-var slideIndex = 1;
-showDivs(slideIndex);
+$(document).on('click', '.yelp-div .no', function(){
+  console.log('yelp no -->>', this);
+  $(this).parent().remove();
+})
+$(document).on('click', '.edamam-div .yes', function(){
+  console.log('yelp yes');
+})
 
-function plusDivs(n) {
-  showDivs(slideIndex += n);
-}
+$(document).on('click', '.edamam-div .no', function(){
+  console.log('yelp no -->>', this);
+  $(this).parent().remove();
+})
 
-function showDivs(n) {
-  var i;
-  var x = document.getElementsByClassName("slides");
-  if (n > x.length) {slideIndex = 1}    
-  if (n < 1) {slideIndex = x.length}
-  for (i = 0; i < x.length; i++) {
-     x[i].style.display = "none";  
-  }
-  x[slideIndex-1].style.display = "block";  
-}
+$( document ).on('click', '#test-btn', function(){
+  console.log('hello world');
+  searchEdemam('chicken','.col2', 10);
+  searchYelp({lat: 37.7911558, lng: -122.39433290000001}, 'chicken', '.col1', 10);
+})
+
+// var slideIndex = 1;
+// showDivs(slideIndex, "slides");
+
+// function plusDivs(n) {
+//   showDivs(slideIndex += n);
+// }
+
+// function showDivs(n) {
+//   var i;
+//   var x = document.getElementsByClassName("slides");
+//   if (n > x.length) {slideIndex = 1}    
+//   if (n < 1) {slideIndex = x.length}
+//   for (i = 0; i < x.length; i++) {
+//      x[i].style.display = "none";  
+//   }
+//   x[slideIndex-1].style.display = "block";  
+// }

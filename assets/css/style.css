@@ -60,30 +60,37 @@ html, body {
   padding: 10px;
   display: flex;
   flex-wrap: wrap;
+  overflow: scroll;
+  position: relative;
 }
 
 .col2 {
   flex: 50%;
   background-color: rgba(120,120,120,1);
   padding: 10px;
-  /* display: flex;
-  flex-wrap: wrap; */
-  /* overflow: scroll; */
+  display: flex;
+  flex-wrap: wrap;
+  overflow: scroll;
   position: relative;
 }
 
-.col2 > div
+.yelp-div,
+.edamam-div
 {
   width: 100%;
   display: none;
   padding: 1em;
   background: lightblue;
 }
-.col2 > div:nth-child(even)
+
+.yelp-div:nth-child(even),
+.edamam-div:nth-child(even)
 {
   background: pink;
 }
-.col2 > div:last-child {
+
+.yelp-div:first-child,
+.edamam-div:first-child {
   display: block;
 }
 
