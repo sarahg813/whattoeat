@@ -102,13 +102,14 @@ function searchYelp(pos, food) {
   });
 }
 
-function searchEdemam(food,target='body') {
+function searchEdemam(food,target='body',count=2) {
   var appId = '94109746';
   var appKey = '987f9b2768860ef9a7e37737bb3ced9f';
 
   var endPoint = 'https://api.edamam.com/search';
   var param = $.param({
     q: food,
+    to: count,
     app_id: appId,
     app_key: appKey
   });
@@ -138,7 +139,25 @@ function searchEdemam(food,target='body') {
   });  
 }
 
-$( document ).on('click', '.col2', function(){
-  console.log('hello world');
-  searchEdemam('chicken','.col2');
+$( document ).on('click', '#test-btn', function(){
+  //console.log('hello world');
+  //searchEdemam('chicken','.col2', 10);
 })
+
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("slides");
+  if (n > x.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";  
+  }
+  x[slideIndex-1].style.display = "block";  
+}
