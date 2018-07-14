@@ -102,7 +102,7 @@ function searchYelp(pos, food) {
   });
 }
 
-function searchEdemam(food) {
+function searchEdemam(food,target='body') {
   var appId = '94109746';
   var appKey = '987f9b2768860ef9a7e37737bb3ced9f';
 
@@ -118,20 +118,27 @@ function searchEdemam(food) {
   })
   .then(function(res){
     console.log(res);
-    var val = res.hits[0];
-    var imgURL = val.recipe.image;
-    var label = val.recipe.label;
-
-    var $img = $('<img>').attr({
-      alt: label,
-      src: imgURL,
-      width: '300px'
-    });
-    var $h2 = $('<h2>').text( label );
-
-    var $div = $('<div>');
-    $div.append( $img, $h2 );
-    $('body').append($div);
+    //var val = res.hits[0];
+    for( var val of res.hits ) {
+      var imgURL = val.recipe.image;
+      var label = val.recipe.label;
+  
+      var $img = $('<img>').attr({
+        alt: label,
+        src: imgURL,
+        width: '300px'
+      });
+      var $h2 = $('<h2>').text( label );
+  
+      var $div = $('<div>');
+      $div.append( $img, $h2 );
+      $(target).append($div);  
+    }
 
   });  
 }
+
+$( document ).on('click', '.col2', function(){
+  console.log('hello world');
+  searchEdemam('chicken','.col2');
+})

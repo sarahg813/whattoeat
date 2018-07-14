@@ -29,3 +29,45 @@ html, body {
   line-height: 30px;
   padding-left: 10px;
 }
+
+.container {
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgba(50,50,50,1);
+  padding: 10px;
+}
+
+.row1 {
+  height: 5rem;
+  background-color: rgba(75,75,75,1);
+  flex: 1 100%;
+}
+
+.row2 {
+  height: calc( 100% - 5rem);
+  background-color: rgba(85,85,85,1);
+  flex: 1 100%;
+  padding: 10px;
+
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.col1 {
+  flex: 50%;
+  background-color: rgba(100,100,100,1);
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.col2 {
+  flex: 50%;
+  background-color: rgba(120,120,120,1);
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: scroll;
+
+}
