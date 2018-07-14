@@ -123,16 +123,38 @@ function searchEdemam(food,target='body',count=2) {
     for( var val of res.hits ) {
       var imgURL = val.recipe.image;
       var label = val.recipe.label;
+      var cal = Math.floor(val.recipe.calories);
+      var fat = Math.floor(val.recipe.digest[0].total);
+      var carbs = Math.floor(val.recipe.digest[1].total);
+      var protein = Math.floor(val.recipe.digest[2].total);
+     
   
       var $img = $('<img>').attr({
         alt: label,
         src: imgURL,
         width: '300px'
       });
+
+      
+      var $ingDiv = $('<div>');
+      var $h3 = $('<h3>');
+      $h3.text("Ingrients: ");
+
+      for (var i=0; i<val.recipe.ingredientLines.length; i++){
+        
+        $ingDiv.append(val.recipe.ingredientLines[i] + "<br />");
+
+
+      }
       var $h2 = $('<h2>').text( label );
-  
+      var $cal = $('<p>').text( "Calories(g): " + cal );
+      var $fat = $('<p>').text( "Fat(g): " + fat );
+      var $carbs = $('<p>').text( "Carbs(g): " + carbs );
+      var $protein = $('<p>').text( "Protein(g): " + protein );
+      
+
       var $div = $('<div>');
-      $div.append( $img, $h2 );
+      $div.append( $img, $h2, $cal, $fat, $carbs, $protein, $h3, $ingDiv );
       $(target).append($div);  
     }
 
