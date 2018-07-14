@@ -78,12 +78,19 @@ function searchYelp(pos, food, target='body', count=2) {
     if (res.total > 0) {
       //var val = res.businesses[0];
       for( var val of res.businesses ) {
-
         var imgURL = val.image_url;
         var name = val.name;
+        var address1 = val.location.display_address[0];
+        var address2 = val.location.display_address[1];
         var phone = val.display_phone;
         var price = val.price;
         var rating = val.rating;
+        var yelpUrl = val.url;
+
+        var categoriesArr = [];
+        for (var i in val.categories) {
+          categoriesArr.push(val.categories[i].title);
+        }
 
         var $img = $('<img>').attr({
           alt: name,
@@ -91,12 +98,18 @@ function searchYelp(pos, food, target='body', count=2) {
           width: '300px'
         });
         var $h2 = $('<h2>').text( name );
-
+        var $address1 = $('<p>').text ( address1 );
+        var $address2 = $('<p>').text ( address2 );
+        var $phone = $('<p>').text ( phone );
+        var $price = $('<span>').text( price );
+        var $categories = $('<span>').text( " - " + categoriesArr.join(", ") );
+        var $rating = $('<p>').text( rating + "/5 stars");
+      
         var $yesBtn = $('<button>').text('Yes').addClass('yes');
         var $noBtn = $('<button>').text('No').addClass('no');
 
         var $div = $('<div>').addClass('yelp-div');
-        $div.append( $img, $h2, $yesBtn, $noBtn );
+        $div.append( $img, $h2 , $address1, $address2, $phone, $price, $categories, $rating, $yesBtn, $noBtn );
         $(target).append($div);
       }
 
