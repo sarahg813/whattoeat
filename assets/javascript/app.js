@@ -34,6 +34,7 @@ function initMap() {
 
     var food = $('#food').val().trim();
     searchYelp( pos, food );
+    searchEdemam( food );
   });
 }
 
@@ -99,4 +100,38 @@ function searchYelp(pos, food) {
     /*YOUR CODE GOES HERE*/ 
     console.log(res);
   });
+}
+
+function searchEdemam(food) {
+  var appId = '94109746';
+  var appKey = '987f9b2768860ef9a7e37737bb3ced9f';
+
+  var endPoint = 'https://api.edamam.com/search';
+  var param = $.param({
+    q: food,
+    app_id: appId,
+    app_key: appKey
+  });
+
+  $.ajax({
+    url: endPoint + '?' + param,
+  })
+  .then(function(res){
+    console.log(res);
+    var val = res.hits[0];
+    var imgURL = val.recipe.image;
+    var label = val.recipe.label;
+
+    var $img = $('<img>').attr({
+      alt: label,
+      src: imgURL,
+      width: '300px'
+    });
+    var $h2 = $('<h2>').text( label );
+
+    var $div = $('<div>');
+    $div.append( $img, $h2 );
+    $('body').append($div);
+
+  });  
 }
