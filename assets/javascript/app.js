@@ -1,9 +1,13 @@
+$("#LogSignButton").click(function(){
+  $("#formDiv").slideToggle();
+});
+
 function initMap() {
-  var map, infoWindow;
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 0, lng: 0},
-    zoom: 16
-  });
+  // var map, infoWindow;
+  // map = new google.maps.Map(document.getElementById('map'), {
+  //   center: {lat: 0, lng: 0},
+  //   zoom: 16
+  // });
   //infoWindow = new google.maps.InfoWindow;
 
   // Try HTML5 geolocation.
@@ -18,7 +22,7 @@ function initMap() {
       //infoWindow.setPosition(pos);
       //infoWindow.setContent('Location found.');
       //infoWindow.open(map);
-      map.setCenter(pos);
+      // map.setCenter(pos);
       getAddress(pos);
     }, function() {
       //handleLocationError(true, infoWindow, map.getCenter());
@@ -60,7 +64,7 @@ function getAddress(pos) {
   })
 }
 
-function searchYelp(pos, food, target='body', count=2) {
+function searchYelp(pos, food, count=2) {
   var rapid = new RapidAPI("hungryteam_5b4654e7e4b004833ec2655e", "da70f8e1-fd7f-4da4-b6be-2add1e8c39d8");
   
   rapid.call('YelpAPI', 'getBusinesses', { 
@@ -95,8 +99,9 @@ function searchYelp(pos, food, target='body', count=2) {
         var $img = $('<img>').attr({
           alt: name,
           src: imgURL,
-          width: '300px'
+          width: '200px'
         });
+
         var $h2 = $('<h2>').text( name );
         var $address1 = $('<p>').text ( address1 );
         var $address2 = $('<p>').text ( address2 );
@@ -105,12 +110,16 @@ function searchYelp(pos, food, target='body', count=2) {
         var $categories = $('<span>').text( " - " + categoriesArr.join(", ") );
         var $rating = $('<p>').text( rating + "/5 stars");
       
-        var $yesBtn = $('<button>').text('Yes').addClass('yes');
-        var $noBtn = $('<button>').text('No').addClass('no');
+        var $yesBtn = $('<button>').html('<i class="fas fa-check"></i>').addClass('yes');
+        var $noBtn = $('<button>').html('<i class="fas fa-times"></i>').addClass('no');
 
+        var $imgDiv = $('<div>').addClass('yelpImg');
+        var $infoDiv = $('<div>').addClass('yelpInfo');
         var $div = $('<div>').addClass('yelp-div');
-        $div.append( $img, $h2 , $address1, $address2, $phone, $price, $categories, $rating, $yesBtn, $noBtn );
-        $(target).append($div);
+
+        $('#yelpImg').append( $img );
+        $('#yelpInfo').append( $h2 , $address1, $address2, $phone, $price, $categories, $rating );
+
       }
 
     }
@@ -120,7 +129,7 @@ function searchYelp(pos, food, target='body', count=2) {
   });
 }
 
-function searchEdemam(food,target='body',count=2) {
+function searchEdemam(food, count=2) {
   var appId = '94109746';
   var appKey = '987f9b2768860ef9a7e37737bb3ced9f';
 
@@ -150,32 +159,28 @@ function searchEdemam(food,target='body',count=2) {
       var $img = $('<img>').attr({
         alt: label,
         src: imgURL,
-        width: '300px'
+        width: '200px'
       });
 
       
       var $ingDiv = $('<div>');
       var $h3 = $('<h3>');
-      $h3.text("Ingrients: ");
+      $h3.text("Ingredients: ");
 
       for (var i=0; i<val.recipe.ingredientLines.length; i++){
         
         $ingDiv.append(val.recipe.ingredientLines[i] + "<br />");
-
-
       }
+
       var $h2 = $('<h2>').text( label );
       var $cal = $('<p>').text( "Calories(g): " + cal );
-      var $fat = $('<p>').text( "Fat(g): " + fat );
-      var $carbs = $('<p>').text( "Carbs(g): " + carbs );
-      var $protein = $('<p>').text( "Protein(g): " + protein );
-      var $yesBtn = $('<button>').text('Yes').addClass('yes');
-      var $noBtn = $('<button>').text('No').addClass('no');
+      var $fat = $('<p>').text( "Fat (g): " + fat );
+      var $carbs = $('<p>').text( "Carbs (g): " + carbs );
+      var $protein = $('<p>').text( "Protein (g): " + protein );
 
-      var $div = $('<div>').addClass('edamam-div');
-      $div.append( $img, $h2, $cal, $fat, $carbs, $protein, $h3, $ingDiv, $yesBtn, $noBtn  );
+      $('#edImg').append( $img );
+      $('#edInfo').append( $h2, $cal, $fat, $carbs, $protein, $h3, $ingDiv );
 
-      $(target).append($div);  
     }
 
   });  
@@ -201,8 +206,8 @@ $(document).on('click', '.edamam-div .no', function(){
 
 $( document ).on('click', '#test-btn', function(){
   console.log('hello world');
-  searchEdemam('chicken','.col2', 10);
-  searchYelp({lat: 37.7911558, lng: -122.39433290000001}, 'chicken', '.col1', 10);
+  searchEdemam('steak', 1);
+  searchYelp({lat: 37.7911558, lng: -122.39433290000001}, 'steak', 1);
 })
 
 // var slideIndex = 1;
