@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Input</title>
+</head>
+<body>
+    <div>
+      <form>
+        <h1>What You Wanna Eat!!??</h1>
+        <input id="firstName" type="text" placeholder="First Name">
+        <input id="lastName" type="text" placeholder="Last Name">
+        <br>
+        <br>
+        <input type="email"  placeholder="Email" id="email">
+        <input type="password"  placeholder="Password" id="ps"><br>
+        <!-- <p>Are you diabetic?</p>
+        <input type="radio" value="yes"> Yes
+        <input type="radio" value="no"> No -->
+        <h2>Prefer Proteins:</h2>
+        <input type="checkbox" id="protein1" value="Beef"> Beef
+        <input type="checkbox" id="protein2" value="Chicken"> Chicken
+        <input type="checkbox" id="protein3" value="Fish"> Fish
+        <input type="checkbox" id="protein4" value="Shellfish">Shellfish <br>
+        <h2>Prefer Vegan/Vegeratian:</h2>
+        <input type="checkbox" id="protein5" value="Tofu"> Tofu
+        <input type="checkbox" id="protein6" value="Eggs"> Eggs
+        <input type="checkbox" id="protein7" value="Lentil"> Lentils
+        <input type="checkbox" id="protein8" value="Tempeh"> Tempeh <br>
+        <h2>Dietary Restrictions:</h2>
+        <input type="checkbox" id="restriction1" value="Lactose"> Lactose
+        <input type="checkbox" id="restriction2" value="Peanut"> Peanut
+        <input type="checkbox" id="restriction3" value="Wheat"> Wheat
+        <input type="checkbox" id="restriction4" value="Soy"> Soy <br>
+        <input type="checkbox" id="restriction5" value="Fish"> Fish
+        <input type="checkbox" id="restriction6" value="Shellfish"> Shellfish
+        <input type="checkbox" id="restriction7" value="Lactose"> Lactose
+        <input type="checkbox" id="restriction8" value="Gluten Free"> Gluten Free <br>
+        <br>
+
+        
+        <button id="submitBtn" type="submit">Submit</button>
+        <button id="cancelBtn" type="cancel">Cancel</button>
+        <!-- <input type="reset" value="Reset"> -->
+      </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        
+        $("#submitBtn").on("click", function () {
+            event.preventDefault();
+
+            var fn = $("#firstName").val();
+            var ln = $("#lastName").val();
+            var e_mail = $("#email").val();
+            var psw = $("#ps").val();
+            var beef = $("#protein1").val();
+            var chicken = $("#protein2").val();
+            var fish = $("#protein3").val();
+            var tofu = $("#protein4").val();
+            var eggs = $("#protein5").val();
+            var shellfish = $("#protein6").val();
+            var lentils = $("#protein7").val();
+            var tempeh = $("#protein8").val();
+            console.log(fn, ln, e_mail, psw, protein1,protein8);
+
+            // if ("#protein1" != checked) {
+            //     alert('not done');
+            // }
+
+
+        })
+
+        $("cancelBtn").on("click", function () {
+            var fn = $("#firstName").val("");
+            var ln = $("#lastName").val("");
+            var e_mail = $("#email").val("");
+            var psw = $("#ps").val("");
+        })
+
+
+    </script>
+</body>
+</html>
