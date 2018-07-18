@@ -313,7 +313,7 @@ function searchEdemam(food, count=2) {
       
       var $ingDiv = $('<div>');
       var $h3 = $('<h3>');
-      $h3.text("Ingredients: ");
+      $h3.text(val.recipe.ingredientLines.length + "Ingredients: ");
 
       for (var i=0; i<val.recipe.ingredientLines.length; i++){
         
