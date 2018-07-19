@@ -62,23 +62,23 @@ function initApp() {
       }
       $('#LogSignButton').hide();
       $('#LogOutButton').show();
-      if ( $('#formDiv').css('display') !== 'none' )
+      if ( $('#formDiv').css('display') !== 'none' ) {
         $("#formDiv").slideToggle();
+      }
 
-      getUserProfile(uid)
-        .then( function(profile){
-          console.log(profile);
-          if (profile) {
-            // profile exist
-            console.log('profile exist');
-          } else {
-            // no profile
-            console.log('no profile');
-            showInputForm(uid);
-          }
-        });
-
-
+      getUserProfile(uid).then( function(profile){
+        console.log(profile);
+        if (profile) {
+          // profile exist
+          console.log('profile exist');
+          $('#frontPage').load('decidepage.html #decidePage');
+          initMap();
+        } else {
+          // no profile
+          console.log('no profile');
+          showInputForm(uid);
+        }
+      });
       // [END_EXCLUDE]
     } else {
       // User is signed out.
@@ -200,12 +200,6 @@ function showInputForm(userId){
 }
 
 function initMap() {
-  // var map, infoWindow;
-  // map = new google.maps.Map(document.getElementById('map'), {
-  //   center: {lat: 0, lng: 0},
-  //   zoom: 16
-  // });
-  //infoWindow = new google.maps.InfoWindow;
 
   // Try HTML5 geolocation.
   var pos;
@@ -216,11 +210,8 @@ function initMap() {
         lng: position.coords.longitude
       };
 
-      //infoWindow.setPosition(pos);
-      //infoWindow.setContent('Location found.');
-      //infoWindow.open(map);
-      // map.setCenter(pos);
       getAddress(pos);
+
     }, function() {
       //handleLocationError(true, infoWindow, map.getCenter());
     });
@@ -234,8 +225,21 @@ function initMap() {
     console.log( pos );
 
     var food = $('#food').val().trim();
-    searchYelp( pos, food );
-    searchEdemam( food );
+
+    // if address is inputted then run the search functions
+    if ($('#location').val() != "") {
+      searchYelp( pos, food );
+      searchEdemam( food );
+
+      $('#currAddress').text(pos);
+      $('#foodPick').text("You chose" + food);
+      $('#decidePage').load('pick.html #pickPage');
+
+    } else {
+      //if not, then border the address form red
+      $('#location').css('border', '2px solid red');
+    }
+    
   });
 }
 
@@ -255,13 +259,14 @@ function getAddress(pos) {
     // console.log(res);
     var status = res.status;
     if (status == "OK") {
-      $('#location').val( res.results[0].formatted_address )
+      $('#location').val( res.results[0].formatted_address );
+      $('#location').css('border', "");
     }
 
   })
 }
 
-function searchYelp(pos, food, count=2) {
+function searchYelp(pos, food, count=1) {
   var rapid = new RapidAPI("hungryteam_5b4654e7e4b004833ec2655e", "da70f8e1-fd7f-4da4-b6be-2add1e8c39d8");
   
   rapid.call('YelpAPI', 'getBusinesses', { 
@@ -326,7 +331,7 @@ function searchYelp(pos, food, count=2) {
   });
 }
 
-function searchEdemam(food, count=2) {
+function searchEdemam(food, count=1) {
   var appId = '94109746';
   var appKey = '987f9b2768860ef9a7e37737bb3ced9f';
 
@@ -347,10 +352,12 @@ function searchEdemam(food, count=2) {
     for( var val of res.hits ) {
       var imgURL = val.recipe.image;
       var label = val.recipe.label;
+      // var recipeURL = val.
       var cal = Math.floor(val.recipe.calories);
       var fat = Math.floor(val.recipe.digest[0].total);
       var carbs = Math.floor(val.recipe.digest[1].total);
       var protein = Math.floor(val.recipe.digest[2].total);
+
      
   
       var $img = $('<img>').attr({
