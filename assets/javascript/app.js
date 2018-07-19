@@ -3,16 +3,19 @@ $("#LogSignButton").click(function(){
 });
 
 $(document).on('click', "#signUp", function(){
-  var oldDiv = $("#formDiv").html();
-  $("#formDiv").load('signup.html #signUpDiv');
+  var showInId='#formDiv';
+  var oldDiv = $(showInId).html();
+  $(showInId).load('signup.html #signup-div');
 
   $(document).on('click', '#signup-submit-btn', function() {
     var email = $('#signup-email-input').val().trim();
     var password = $('#signup-password-input').val().trim();
     handleSignUp(email, password);
-  
-    $("#formDiv").slideToggle();
-    $("#formDiv").html(oldDiv);
+
+    // clean up
+    $(document).off('click', '#signup-submit-btn');
+    $(showInId).slideToggle();
+    $(showInId).html(oldDiv);
   });
 });
 
@@ -61,6 +64,21 @@ function initApp() {
       $('#LogOutButton').show();
       if ( $('#formDiv').css('display') !== 'none' )
         $("#formDiv").slideToggle();
+
+      getUserProfile(uid)
+        .then( function(profile){
+          console.log(profile);
+          if (profile) {
+            // profile exist
+            console.log('profile exist');
+          } else {
+            // no profile
+            console.log('no profile');
+            showInputForm(uid);
+          }
+        });
+
+
       // [END_EXCLUDE]
     } else {
       // User is signed out.
@@ -148,6 +166,37 @@ function handleSignUp(email, password) {
     // [END_EXCLUDE]
   });
   // [END createwithemail]
+}
+
+function getUserProfile(userId) {
+  return firebase.database().ref('/users/' + userId).once('value').then(function(snap) { // returns {name:kit}
+  // firebase.database().ref().child('users').child(userid).once('value').then(function(snap) { // returns {name:kit}
+  // return firebase.database().ref('users').orderByKey().equalTo(userid).once('value').then(function(snap) { // return S3d33zBQZiWjZ944rYAJnc9zamY2: {name: "Kit"}
+    //console.log( snap.val() );
+    return snap.val();
+  });
+}
+
+function showInputForm(userId){
+  var showInId = '#frontPage';
+  var oldDiv = $(showInId).html();
+  $(showInId).load('input.html #input-div');
+
+  $(document).on('click', '#input-submit-btn', function() {
+    event.preventDefault();
+    
+    var restrictionsArray = [];
+    $(".restricitons:checked").each(function() {
+        restrictionsArray.push($(this).val());
+    });
+
+    firebase.database().ref('/users/' + userId).set({
+      restrictions: restrictionsArray
+    })
+    //clean up
+    $(document).off('click', '#input-submit-btn');
+    $(showInId).html(oldDiv);
+  });
 }
 
 function initMap() {
