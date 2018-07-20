@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Input</title>
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 <body>
   <div id="input-div">
@@ -11,7 +12,7 @@
           <input id="inputFirstNameInput" type="text" placeholder="First Name">
           <input id="inputLastNameInput" type="text" placeholder="Last Name">
           <br>
-          <br>
+          <!-- <br> -->
           <!--   <input type="email"  placeholder="Email" id="email">
           <input type="password"  placeholder="Password" id="ps"><br> -->
           <!-- <p>Are you diabetic?</p>
@@ -26,8 +27,11 @@
           <input type="checkbox" id="protein5" class="veg" value="Tofu"> Tofu
           <input type="checkbox" id="protein6" class="veg" value="Eggs"> Eggs
           <input type="checkbox" id="protein7" class="veg" value="Lentil"> Lentils
-          <input type="checkbox" id="protein8" class="veg" value="Tempeh"> Tempeh <br>
+          <input type="checkbox" id="protein8" class="veg" value="Tempeh"> Tempeh 
+          <br>
           <h2>Dietary Restrictions:</h2>
+          <div>
+          <div class="inputBox">
           <input type="checkbox" id="restriction1" class="restricitons" value="dairy-free">
           <label for="restriction1">Dairy-free</label>
           <input type="checkbox" id="restriction2" class="restricitons" value="peanut-free">
@@ -36,6 +40,8 @@
           <label for="restriction3">Wheat-free</label>
           <input type="checkbox" id="restriction4" class="restricitons" value="soy-free">
           <label for="restriction4">Soy-free</label>
+          </div>
+          <div class="inputBox">
           <input type="checkbox" id="restriction5" class="restricitons" value="fish-free">
           <label for="restriction5">Fish-free</label>
           <input type="checkbox" id="restriction6" class="restricitons" value="shellfish-free">
@@ -44,13 +50,17 @@
           <label for="restriction7">Tree-Nut-free</label>
           <input type="checkbox" id="restriction8" class="restricitons" value="gluten-free">
           <label for="restriction8">Gluten-free</label>
+          </div>
+          <div class="inputBox">
           <input type="checkbox" id="restriction9" class="restricitons" value="egg-free">
           <label for="restriction9">Egg-free</label>
           <input type="checkbox" id="restriction10" class="restricitons" value="fat-free">
           <label for="restriction10">Fat-free</label>
           <input type="checkbox" id="restriction11" class="restricitons" value="low-sugar">
           <label for="restriction11">Low-sugar</label>
-    
+          </div>
+          </div>
+          <br>
           <button id="input-submit-btn" type="submit">Submit</button>
           <button id="input-cancel-btn" type="cancel">Cancel</button>
           <!-- <input type="reset" value="Reset"> -->
