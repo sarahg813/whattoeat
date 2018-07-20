@@ -4,78 +4,152 @@
   <title>Input</title>
 </head>
 <body>
-    <div>
-      <form>
-        <h1>What You Wanna Eat!!??</h1>
-        <input id="firstName" type="text" placeholder="First Name">
-        <input id="lastName" type="text" placeholder="Last Name">
-        <br>
-        <br>
-        <input type="email"  placeholder="Email" id="email">
-        <input type="password"  placeholder="Password" id="ps"><br>
-        <!-- <p>Are you diabetic?</p>
-        <input type="radio" value="yes"> Yes
-        <input type="radio" value="no"> No -->
-        <h2>Prefer Proteins:</h2>
-        <input type="checkbox" id="protein1" value="Beef"> Beef
-        <input type="checkbox" id="protein2" value="Chicken"> Chicken
-        <input type="checkbox" id="protein3" value="Fish"> Fish
-        <input type="checkbox" id="protein4" value="Shellfish">Shellfish <br>
-        <h2>Prefer Vegan/Vegeratian:</h2>
-        <input type="checkbox" id="protein5" value="Tofu"> Tofu
-        <input type="checkbox" id="protein6" value="Eggs"> Eggs
-        <input type="checkbox" id="protein7" value="Lentil"> Lentils
-        <input type="checkbox" id="protein8" value="Tempeh"> Tempeh <br>
-        <h2>Dietary Restrictions:</h2>
-        <input type="checkbox" id="restriction1" value="Lactose"> Lactose
-        <input type="checkbox" id="restriction2" value="Peanut"> Peanut
-        <input type="checkbox" id="restriction3" value="Wheat"> Wheat
-        <input type="checkbox" id="restriction4" value="Soy"> Soy <br>
-        <input type="checkbox" id="restriction5" value="Fish"> Fish
-        <input type="checkbox" id="restriction6" value="Shellfish"> Shellfish
-        <input type="checkbox" id="restriction7" value="Lactose"> Lactose
-        <input type="checkbox" id="restriction8" value="Gluten Free"> Gluten Free <br>
-        <br>
-
-        
-        <button id="submitBtn" type="submit">Submit</button>
-        <button id="cancelBtn" type="cancel">Cancel</button>
-        <!-- <input type="reset" value="Reset"> -->
-      </form>
+  <div id="input-div">
+    <div class="container">
+        <form>
+          <h1>What You Wanna Eat!!??</h1>
+          <input id="inputFirstNameInput" type="text" placeholder="First Name">
+          <input id="inputLastNameInput" type="text" placeholder="Last Name">
+          <br>
+          <br>
+          <!--   <input type="email"  placeholder="Email" id="email">
+          <input type="password"  placeholder="Password" id="ps"><br> -->
+          <!-- <p>Are you diabetic?</p>
+          <input type="radio" value="yes"> Yes
+          <input type="radio" value="no"> No -->
+          <h2>Prefer Proteins:</h2>
+          <input type="checkbox" id="protein1" class="meats" value="Beef"> Beef
+          <input type="checkbox" id="protein2" class="meats" value="Chicken"> Chicken
+          <input type="checkbox" id="protein3" class="meats" value="Fish"> Fish
+          <input type="checkbox" id="protein4" class="meats" value="Shellfish">Shellfish <br>
+          <h2>Prefer Vegan/Vegeratian:</h2>
+          <input type="checkbox" id="protein5" class="veg" value="Tofu"> Tofu
+          <input type="checkbox" id="protein6" class="veg" value="Eggs"> Eggs
+          <input type="checkbox" id="protein7" class="veg" value="Lentil"> Lentils
+          <input type="checkbox" id="protein8" class="veg" value="Tempeh"> Tempeh <br>
+          <h2>Dietary Restrictions:</h2>
+          <input type="checkbox" id="restriction1" class="restricitons" value="dairy-free">
+          <label for="restriction1">Dairy-free</label>
+          <input type="checkbox" id="restriction2" class="restricitons" value="peanut-free">
+          <label for="restriction2">Peanut-free</label>
+          <input type="checkbox" id="restriction3" class="restricitons" value="wheat-free">
+          <label for="restriction3">Wheat-free</label>
+          <input type="checkbox" id="restriction4" class="restricitons" value="soy-free">
+          <label for="restriction4">Soy-free</label>
+          <input type="checkbox" id="restriction5" class="restricitons" value="fish-free">
+          <label for="restriction5">Fish-free</label>
+          <input type="checkbox" id="restriction6" class="restricitons" value="shellfish-free">
+          <label for="restriction6">Shellfish-free</label>
+          <input type="checkbox" id="restriction7" class="restricitons" value="tree-nut-free">
+          <label for="restriction7">Tree-Nut-free</label>
+          <input type="checkbox" id="restriction8" class="restricitons" value="gluten-free">
+          <label for="restriction8">Gluten-free</label>
+          <input type="checkbox" id="restriction9" class="restricitons" value="egg-free">
+          <label for="restriction9">Egg-free</label>
+          <input type="checkbox" id="restriction10" class="restricitons" value="fat-free">
+          <label for="restriction10">Fat-free</label>
+          <input type="checkbox" id="restriction11" class="restricitons" value="low-sugar">
+          <label for="restriction11">Low-sugar</label>
+    
+          <button id="input-submit-btn" type="submit">Submit</button>
+          <button id="input-cancel-btn" type="cancel">Cancel</button>
+          <!-- <input type="reset" value="Reset"> -->
+        </form>
     </div>
+  </div>
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCeEfjqDlvTZ9eHxtgANgsdAdPby1opHs0",
+        authDomain: "what-do-you-wanna-eat.firebaseapp.com",
+        databaseURL: "https://what-do-you-wanna-eat.firebaseio.com",
+        projectId: "what-do-you-wanna-eat",
+        storageBucket: "",
+        messagingSenderId: "746879320609"
+      };
+      firebase.initializeApp(config);
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
         
-        $("#submitBtn").on("click", function () {
+        $("#inputSubmitBtn").on("click", function () {
             event.preventDefault();
 
-            var fn = $("#firstName").val();
-            var ln = $("#lastName").val();
-            var e_mail = $("#email").val();
-            var psw = $("#ps").val();
-            var beef = $("#protein1").val();
-            var chicken = $("#protein2").val();
-            var fish = $("#protein3").val();
-            var tofu = $("#protein4").val();
-            var eggs = $("#protein5").val();
-            var shellfish = $("#protein6").val();
-            var lentils = $("#protein7").val();
-            var tempeh = $("#protein8").val();
-            console.log(fn, ln, e_mail, psw, protein1,protein8);
+            var fn = $("#inputFirstNameInput").val();
+            var ln = $("#inputLastNameInput").val();
+            
 
-            // if ("#protein1" != checked) {
-            //     alert('not done');
-            // }
+            var meatArray = [];
+            $(".meats:checked").each(function() {
+                meatArray.push($(this).val());
+            });
+            var vegArray = [];
+            $(".veg:checked").each(function() {
+                vegArray.push($(this).val());
+            });
+             var restrictionsArray = [];
+            $(".restricitons:checked").each(function() {
+                restrictionsArray.push($(this).val());
+            });
+            console.log(fn, ln, meatArray, vegArray, restrictionsArray); 
+            var db = firebase.database();
+            db.ref("x").push({
+                firstName: fn,
+                lastName: ln,
+                meat: meatArray,
+                veg: vegArray,
+                restrictions: restrictionsArray
+            })   
+
+            db.ref("y/z").set({
+                firstName: fn,
+                lastName: ln,
+                meat: meatArray,
+                veg: vegArray,
+                restrictions: restrictionsArray
+            })
+        });
 
 
-        })
-
-        $("cancelBtn").on("click", function () {
+        $("#inputCancelBtn").on("click", function () { //reset btn
+            event.preventDefault();
             var fn = $("#firstName").val("");
             var ln = $("#lastName").val("");
-            var e_mail = $("#email").val("");
-            var psw = $("#ps").val("");
-        })
+            var db = firebase.database();
+            console.log('hello');
+            var ref = db.ref("y").orderByKey().equalTo("z");
+            ref.once("value")
+            .then (function(snap){
+            console.log(snap.val()); 
+            var obj = snap.val(); 
+            console.log(obj.z.restrictions);
+            })
+            
+        });
+
+
+        function searchEdemam(food, count=2) {
+  var appId = '94109746';
+  var appKey = '987f9b2768860ef9a7e37737bb3ced9f';
+
+  var endPoint = 'https://api.edamam.com/search';
+  var param = $.param({
+    q: food,
+    healthLabels: "",
+    to: count,
+    app_id: appId,
+    app_key: appKey
+  });
+
+  $.ajax({
+    url: endPoint + '?' + param,
+  })
+  .then(function(res){
+    console.log(res);
+});
+};
+
 
 
     </script>
