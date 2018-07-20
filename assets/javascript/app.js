@@ -3,21 +3,37 @@ $("#LogSignButton").click(function(){
   $("#formDiv").slideToggle();
 });
 
-$(document).on('click', "#signUp", function(){
+$(document).on('click', '#signUp', function(){
   var showInId='#formDiv';
-  var oldDiv = $(showInId).html();
-  $(showInId).load('signup.html #signup-div');
+  //var oldDiv = $(showInId).html();
+  $(showInId).load('signup.html #signup-div', function() {
+    $('#LogSignButton').prop('disabled', true);  
+  });
 
   $(document).on('click', '#signup-submit-btn', function() {
+    event.preventDefault();
+
     var email = $('#signup-email-input').val().trim();
     var password = $('#signup-password-input').val().trim();
     handleSignUp(email, password);
 
     // clean up
-    $(document).off('click', '#signup-submit-btn');
-    $(showInId).slideToggle();
-    $(showInId).html(oldDiv);
+    cleanup();
   });
+
+  $(document).on('click', '#signup-cancel-btn', function() {
+    event.preventDefault();
+    // clean up
+    cleanup();
+  });
+
+  function cleanup() {
+    $(document).off('click', '#signup-submit-btn');
+    $(document).off('click', '#signup-cancel-btn');
+    $(showInId).slideToggle();
+    $(showInId).html(whattoeat.originalLoginPage);
+    $('#LogSignButton').prop('disabled', false);  
+  }
 });
 
 // global custom object
