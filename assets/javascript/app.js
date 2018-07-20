@@ -276,7 +276,22 @@ function showDecidePage() {
     //show next
     showPick(food, location, whattoeat.pos);
   });  
+  $(document).on('click', '#randomButton', function(){
+    event.preventDefault();
+    var location = $('#location').val().trim();
+    var randomFood = whattoeat.profile.foods[Math.floor(Math.random() * whattoeat.profile.foods.length)];
+
+    if (!location){
+      //if not, then border the address form red
+      $('#location').css('border', '2px solid red');
+      return false; // short circuit
+    }
+    $(showInId).html(oldDiv);
+    //show next
+    showPick(randomFood, location, whattoeat.pos);
+  });
 }
+
 
 function showPick(food, location, pos) {
   var showInId = '#frontPage';
@@ -348,49 +363,49 @@ function getLocation(pos) {
   })
 }
 
-function initMap() {
+// function initMap() {
 
-  // Try HTML5 geolocation.
-  var pos;
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
+//   // Try HTML5 geolocation.
+//   var pos;
+//   if (navigator.geolocation) {
+//     navigator.geolocation.getCurrentPosition(function(position) {
+//       pos = {
+//         lat: position.coords.latitude,
+//         lng: position.coords.longitude
+//       };
 
-      getAddress(pos);
+//       getAddress(pos);
 
-    }, function() {
-      //handleLocationError(true, infoWindow, map.getCenter());
-    });
-  } else {
-    // Browser doesn't support Geolocation
-    //handleLocationError(false, infoWindow, map.getCenter());
-  }
+//     }, function() {
+//       //handleLocationError(true, infoWindow, map.getCenter());
+//     });
+//   } else {
+//     // Browser doesn't support Geolocation
+//     //handleLocationError(false, infoWindow, map.getCenter());
+//   }
 
-  $(document).on('click', '#search', function() { 
-    event.preventDefault();
-    console.log( pos );
+//   $(document).on('click', '#search', function() { 
+//     event.preventDefault();
+//     console.log( pos );
 
-    var userAddress = $('#location').val().trim();
-    var food = $('#food').val().trim();
+//     var userAddress = $('#location').val().trim();
+//     var food = $('#food').val().trim();
 
-    // if address is inputted then run the search functions
-    if ($('#location').val() != "") {
-      searchYelp( pos, food );
-      searchEdemam( food );
+//     // if address is inputted then run the search functions
+//     if ($('#location').val() != "") {
+//       searchYelp( pos, food );
+//       searchEdemam( food );
 
-      $('#decidePage').load('pick.html #pickPage', function(){
-        $('#currAddress').text(userAddress);
-        $('#foodPick').text("You chose " + food);
-      });
-    } else {
-      //if not, then border the address form red
-      $('#location').css('border', '2px solid red');
-    }
-  });
-}
+//       $('#decidePage').load('pick.html #pickPage', function(){
+//         $('#currAddress').text(userAddress);
+//         $('#foodPick').text("You chose " + food);
+//       });
+//     } else {
+//       //if not, then border the address form red
+//       $('#location').css('border', '2px solid red');
+//     }
+//   });
+// }
 
 function getAddress(pos) {
   var googleKey = 'AIzaSyCIWbtgXbcI90D2ADfqPjRK5n1HyBFrLy8';
