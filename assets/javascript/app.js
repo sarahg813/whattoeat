@@ -80,6 +80,7 @@ function initApp() {
         return (!profile) ? showInputForm(uid) : profile;
       }).then( function(profile){
         console.log('getUserProfile 2nd then:', profile);
+        whattoeat.profile = profile;
         showDecidePage();
       });
 
