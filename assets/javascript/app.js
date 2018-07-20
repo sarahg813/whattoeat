@@ -3,18 +3,38 @@ $("#LogSignButton").click(function(){
 });
 
 $(document).on('click', "#signUp", function(){
-  var oldDiv = $("#formDiv").html();
-  $("#formDiv").load('signup.html #signUpDiv');
+  var showInId='#formDiv';
+  var oldDiv = $(showInId).html();
+  $(showInId).load('signup.html #signup-div');
 
   $(document).on('click', '#signup-submit-btn', function() {
     var email = $('#signup-email-input').val().trim();
     var password = $('#signup-password-input').val().trim();
     handleSignUp(email, password);
-  
-    $("#formDiv").slideToggle();
-    $("#formDiv").html(oldDiv);
+
+    // clean up
+    $(document).off('click', '#signup-submit-btn');
+    $(showInId).slideToggle();
+    $(showInId).html(oldDiv);
   });
 });
+
+// global custom object
+var whattoeat = {};
+var getPositionPromise = getPosition()
+.then( function(result)  {
+  console.log('getPositionPromise')
+  whattoeat.pos = result.pos;
+  whattoeat.location = result.location;
+  return;
+})
+.catch( function(error) {
+  console.log( error )
+})
+// save original login form to global object
+whattoeat.originalLoginPage = $('#formDiv').html();
+// save original frontpage div to global object
+whattoeat.originalFrontPage = $('#frontPage').html();
 
 
 // Initialize Firebase
@@ -46,31 +66,37 @@ function initApp() {
     // [END_EXCLUDE]
     if (user) {
       // User is signed in.
-      console.log(' User is signed in.');
-      var displayName = user.displayName;
-      var email = user.email;
-      var emailVerified = user.emailVerified;
-      var photoURL = user.photoURL;
-      var isAnonymous = user.isAnonymous;
       var uid = user.uid;
-      var providerData = user.providerData;
       // [START_EXCLUDE]
-      if (!emailVerified) {
-      }
       $('#LogSignButton').hide();
       $('#LogOutButton').show();
       if ( $('#formDiv').css('display') !== 'none' ) {
         $("#formDiv").slideToggle();
       }
 
-      $('#frontPage').load('decidepage.html #decidePage');
-      initMap();
+      getUserProfile(uid).then( function(profile){
+        console.log('getUserProfile 1st then:', profile);
+        return (!profile) ? showInputForm(uid) : profile;
+      }).then( function(profile){
+        console.log('getUserProfile 2nd then:', profile);
+        showDecidePage();
+      });
+
+      //$('#frontPage').load('decidepage.html #decidePage');
+      //initMap();
       // [END_EXCLUDE]
     } else {
       // User is signed out.
       // [START_EXCLUDE]
       $('#LogSignButton').show();
       $('#LogOutButton').hide();
+      if ( $('#formDiv').css('display') !== 'none' ) {
+        $("#formDiv").slideToggle();
+      }
+      // restore original login form from global object
+      $('#formDiv').html(whattoeat.originalLoginPage);
+      // restore original frontpage div from global object
+      $('#frontPage').html(whattoeat.originalFrontPage);
       // [END_EXCLUDE]
     }
     // [START_EXCLUDE silent]
@@ -152,6 +178,164 @@ function handleSignUp(email, password) {
     // [END_EXCLUDE]
   });
   // [END createwithemail]
+}
+
+function getUserProfile(userId) {
+  return firebase.database().ref('/users/' + userId).once('value').then(function(snap) { // returns {name:kit}
+  // firebase.database().ref().child('users').child(userid).once('value').then(function(snap) { // returns {name:kit}
+  // return firebase.database().ref('users').orderByKey().equalTo(userid).once('value').then(function(snap) { // return S3d33zBQZiWjZ944rYAJnc9zamY2: {name: "Kit"}
+    //console.log( snap.val() );
+    return snap.val();
+  });
+}
+
+function showInputForm(userId){
+  return new Promise(function(resolve, reject) {
+    var showInId = '#frontPage';
+    //var oldDiv = $(showInId).html();
+    $(showInId).load('input.html #input-div');
+  
+    $(document).on('click', '#input-submit-btn', function() {
+      event.preventDefault();
+      
+      var restrictionsArray = [];
+      $(".restricitons:checked").each(function() {
+          restrictionsArray.push($(this).val());
+      });
+      var restrictions = {restrictions: restrictionsArray}
+  
+      firebase.database().ref('/users/' + userId).set(restrictions)
+      //clean up
+      $(document).off('click', '#input-submit-btn');
+      //$(showInId).html(oldDiv);
+      resolve(restrictions)
+    });  
+  })
+}
+
+function showDecidePage() {
+  var showInId = '#frontPage';
+  var oldDiv = $(showInId).html();
+
+  getPositionPromise.then( function() {
+    $('#location').val(whattoeat.location);
+  });
+
+  $(showInId).load('decidepage.html #decidePage', function(){
+    console.log('whattoeat.location',whattoeat.location)
+    $('#location').val(whattoeat.location);
+    var input = document.getElementById('location')
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    // Set the data fields to return when the user selects a place.
+    autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
+
+    autocomplete.addListener('place_changed', function() {
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        // User entered the name of a Place that was not suggested and
+        // pressed the Enter key, or the Place Details request failed.
+        window.alert("No details available for input: '" + place.name + "'");
+        return;
+      }
+
+      var address = '';
+      if (place.address_components) {
+        address = [
+          (place.address_components[0] && place.address_components[0].short_name || ''),
+          (place.address_components[1] && place.address_components[1].short_name || ''),
+          (place.address_components[2] && place.address_components[2].short_name || '')
+        ].join(' ');
+      }
+    });
+  });  
+
+  $(document).on('click', '#search', function() {
+    event.preventDefault();
+    var food = $('#food').val().trim();
+    var location = $('#location').val().trim();
+
+    if (!location){
+      //if not, then border the address form red
+      $('#location').css('border', '2px solid red');
+      return false; // short circuit
+    }
+
+    //clean up
+    $(document).off('click', '#search');
+    $(showInId).html(oldDiv);
+    //show next
+    showPick(food, location, whattoeat.pos);
+  });  
+}
+
+function showPick(food, location, pos) {
+  var showInId = '#frontPage';
+  var oldDiv = $(showInId).html();
+  
+  $(showInId).load('pick.html #pickPage', function(){
+    $('#currAddress').text(location);
+    $('#foodPick').text("You choose " + food);
+    searchYelp( pos, food );
+    searchEdemam( food );  
+    $('#pickInfo').append( $('<button id="pick-change-btn">').text('Change') )
+  });
+
+  $(document).on('click', '#pick-change-btn', function() {
+    event.preventDefault();
+    //clean up
+    $(document).off('click', '#pick-change-btn');
+    $(showInId).html(oldDiv);
+    //show next
+    showDecidePage();
+  });
+
+}
+
+function getPosition(settings) {
+  return new Promise(function(resolve, reject) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        // On Success
+        function(position) {
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          var geocoder = new google.maps.Geocoder;
+          var point = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          geocoder.geocode({'latLng': point}, function (locations, status) {
+            var location = (status == "OK") ? locations[0].formatted_address : null;
+            resolve({pos,location});
+          });  
+        },
+        // On Error
+        function(error) {
+          reject(error);
+        },
+        settings
+      );  
+    } else {
+      reject("Browser doesn't support Geolocation");
+    }
+  });
+}
+
+function getLocation(pos) {
+  var googleKey = 'AIzaSyCIWbtgXbcI90D2ADfqPjRK5n1HyBFrLy8';
+  var endpoint = 'https://maps.googleapis.com/maps/api/geocode/json';
+  var latlng = pos.lat + ',' + pos.lng;
+  var param = $.param({
+    latlng: latlng,
+    key: googleKey,
+  })
+
+  return $.ajax({
+    url: endpoint + '?' + param,
+  })
+  .then(function(res){
+    console.log(res);
+    return (res.status == "OK") ? res.results[0].formatted_address : null;
+  })
 }
 
 function initMap() {
@@ -361,12 +545,6 @@ $(document).on('click', '.edamam-div .yes', function(){
 $(document).on('click', '.edamam-div .no', function(){
   console.log('yelp no -->>', this);
   $(this).parent().remove();
-})
-
-$( document ).on('click', '#test-btn', function(){
-  console.log('hello world');
-  searchEdemam('steak', 1);
-  searchYelp({lat: 37.7911558, lng: -122.39433290000001}, 'steak', 1);
 })
 
 // var slideIndex = 1;
