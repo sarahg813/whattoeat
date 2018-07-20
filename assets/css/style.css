@@ -136,6 +136,7 @@ html, body {
 .col1 {
   flex: 50%;
   background-color: rgba(100,100,100,1);
+  height: 100%;
   padding: 10px;
   overflow: scroll;
   position: relative;
@@ -144,6 +145,7 @@ html, body {
 .col2 {
   flex: 50%;
   background-color: rgba(100,100,100,1);
+  height: 100%;
   padding: 10px;
   overflow: scroll;
   position: relative;
@@ -175,7 +177,7 @@ html, body {
   color: #383838;
 }
 
-/* start -- section = pickPage */
+/* end -- section = pickPage */
 
 
 .yelp-div:nth-child(even),
