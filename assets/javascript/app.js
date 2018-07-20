@@ -201,17 +201,24 @@ function showInputForm(userId){
     $(document).on('click', '#input-submit-btn', function() {
       event.preventDefault();
       
+      var foodsArray = [];
+      $(".meats:checked").each(function() {
+          foodsArray.push($(this).val());
+      });
+      $(".veg:checked").each(function() {
+          foodsArray.push($(this).val());
+      });
+
       var restrictionsArray = [];
       $(".restricitons:checked").each(function() {
           restrictionsArray.push($(this).val());
       });
-      var restrictions = {restrictions: restrictionsArray}
   
-      firebase.database().ref('/users/' + userId).set(restrictions)
+      firebase.database().ref('/users/' + userId).set({restrictions: restrictionsArray,foods: foodsArray})
       //clean up
       $(document).off('click', '#input-submit-btn');
       //$(showInId).html(oldDiv);
-      resolve(restrictions)
+      resolve({restrictions: restrictionsArray,foods: foodsArray})
     });  
   })
 }
