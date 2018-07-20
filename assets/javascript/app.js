@@ -1,3 +1,4 @@
+
 $("#LogSignButton").click(function(){
   $("#formDiv").slideToggle();
 });
@@ -90,6 +91,7 @@ function initApp() {
       // [START_EXCLUDE]
       $('#LogSignButton').show();
       $('#LogOutButton').hide();
+
       if ( $('#formDiv').css('display') !== 'none' ) {
         $("#formDiv").slideToggle();
       }
@@ -112,7 +114,7 @@ function initApp() {
   //$('#quickstart-password-reset').on('click', sendPasswordReset);
 }
 /**
- * Handles the sign in button press.
+ * Handles the sign-in button press.
  */
 function toggleSignIn() {
   if (firebase.auth().currentUser) {
@@ -363,6 +365,7 @@ function initMap() {
     event.preventDefault();
     console.log( pos );
 
+    var userAddress = $('#location').val().trim();
     var food = $('#food').val().trim();
 
     // if address is inputted then run the search functions
@@ -370,15 +373,14 @@ function initMap() {
       searchYelp( pos, food );
       searchEdemam( food );
 
-      $('#currAddress').text(pos);
-      $('#foodPick').text("You chose" + food);
-      $('#decidePage').load('pick.html #pickPage');
-
+      $('#decidePage').load('pick.html #pickPage', function(){
+        $('#currAddress').text(userAddress);
+        $('#foodPick').text("You chose " + food);
+      });
     } else {
       //if not, then border the address form red
       $('#location').css('border', '2px solid red');
     }
-    
   });
 }
 
@@ -430,7 +432,7 @@ function searchYelp(pos, food, count=1) {
         var phone = val.display_phone;
         var price = val.price;
         var rating = val.rating;
-        var yelpUrl = val.url;
+        var yelpURL = val.url;
 
         var categoriesArr = [];
         for (var i in val.categories) {
@@ -450,14 +452,8 @@ function searchYelp(pos, food, count=1) {
         var $price = $('<span>').text( price );
         var $categories = $('<span>').text( " - " + categoriesArr.join(", ") );
         var $rating = $('<p>').text( rating + "/5 stars");
-      
-        var $yesBtn = $('<button>').html('<i class="fas fa-check"></i>').addClass('yes');
-        var $noBtn = $('<button>').html('<i class="fas fa-times"></i>').addClass('no');
 
-        var $imgDiv = $('<div>').addClass('yelpImg');
-        var $infoDiv = $('<div>').addClass('yelpInfo');
-        var $div = $('<div>').addClass('yelp-div');
-
+        $('#yelpYes').attr("data-url", yelpURL);
         $('#yelpImg').append( $img );
         $('#yelpInfo').append( $h2 , $address1, $address2, $phone, $price, $categories, $rating );
 
@@ -491,14 +487,12 @@ function searchEdemam(food, count=1) {
     for( var val of res.hits ) {
       var imgURL = val.recipe.image;
       var label = val.recipe.label;
-      // var recipeURL = val.
+      var recipeURL = val.recipe.url;
       var cal = Math.floor(val.recipe.calories);
       var fat = Math.floor(val.recipe.digest[0].total);
       var carbs = Math.floor(val.recipe.digest[1].total);
       var protein = Math.floor(val.recipe.digest[2].total);
-
-     
-  
+       
       var $img = $('<img>').attr({
         alt: label,
         src: imgURL,
@@ -508,7 +502,7 @@ function searchEdemam(food, count=1) {
       
       var $ingDiv = $('<div>');
       var $h3 = $('<h3>');
-      $h3.text(val.recipe.ingredientLines.length + "Ingredients: ");
+      $h3.text("Ingredients: ");
 
       for (var i=0; i<val.recipe.ingredientLines.length; i++){
         
@@ -521,6 +515,7 @@ function searchEdemam(food, count=1) {
       var $carbs = $('<p>').text( "Carbs (g): " + carbs );
       var $protein = $('<p>').text( "Protein (g): " + protein );
 
+      $('#edYes').attr("data-url", recipeURL);
       $('#edImg').append( $img );
       $('#edInfo').append( $h2, $cal, $fat, $carbs, $protein, $h3, $ingDiv );
 
@@ -530,16 +525,17 @@ function searchEdemam(food, count=1) {
 }
 
 
-$(document).on('click', '.yelp-div .yes', function(){
-  console.log('yelp yes');
+$(document).on('click', '#yelpYes', function(){
+  window.open($(this).attr("data-url"));
 })
 
 $(document).on('click', '.yelp-div .no', function(){
   console.log('yelp no -->>', this);
   $(this).parent().remove();
 })
-$(document).on('click', '.edamam-div .yes', function(){
-  console.log('yelp yes');
+
+$(document).on('click', '#edYes', function(){
+  window.open($(this).attr("data-url"));
 })
 
 $(document).on('click', '.edamam-div .no', function(){
