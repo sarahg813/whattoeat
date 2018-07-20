@@ -40,12 +40,12 @@ whattoeat.originalFrontPage = $('#frontPage').html();
 
 // Initialize Firebase
 var config = {
-  apiKey: "AIzaSyDw9RAL-92BRIfkIz6A_B4e269AxQCQtZ8",
-  authDomain: "dbwritetest.firebaseapp.com",
-  databaseURL: "https://dbwritetest.firebaseio.com",
-  projectId: "dbwritetest",
-  storageBucket: "dbwritetest.appspot.com",
-  messagingSenderId: "890074454165"
+  apiKey: "AIzaSyCnwIO592-rycWYdGWttYt_Vcyzp_LJa14",
+  authDomain: "what-do-you-wanna-eat-e411d.firebaseapp.com",
+  databaseURL: "https://what-do-you-wanna-eat-e411d.firebaseio.com",
+  projectId: "what-do-you-wanna-eat-e411d",
+  storageBucket: "what-do-you-wanna-eat-e411d.appspot.com",
+  messagingSenderId: "210098460449"
 };
 
 firebase.initializeApp(config);
