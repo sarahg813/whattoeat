@@ -153,15 +153,20 @@ html, body {
   border-left: 1px solid #383838;
 }
 
-#yelpDiv,
-#edDiv {
+.yelpDiv,
+.edDiv {
   width: 100%;
   height: 90%;
-  display: flex;
+  display: none;
   flex-direction: row;
   justify-content: space-evenly;
   background-color: rgba(255, 255, 255, 0.8);
   padding: 1em;
+}
+
+.yelpDiv:first-child,
+.edDiv:first-child {
+  display: flex;
 }
 
 #yelpImg,

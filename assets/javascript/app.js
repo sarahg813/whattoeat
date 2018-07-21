@@ -316,8 +316,8 @@ function showPick(food, location, pos) {
   $(showInId).load('pick.html #pickPage', function(){
     $('#currAddress').text(location);
     $('#foodPick').text("How about this " + food.toLowerCase() + " restaurant or recipe?");
-    searchYelp( food, location );
-    searchEdemam( food );  
+    searchYelp( food, location, 10 );
+    searchEdemam( food, 10 );  
     $('#pickInfo').append( $('<button id="pick-change-btn">').text('change') )
   });
 
@@ -493,10 +493,19 @@ function searchYelp(food, location, count=1) {
         var $categories = $('<span>').text( " - " + categoriesArr.join(", ") );
         var $rating = $('<p>').text( rating + "/5 stars");
 
-        $('#yelpYes').attr("data-url", yelpURL);
-        $('#yelpImg').append( $img );
-        $('#yelpInfo').append( $h2 , $address1, $address2, $phone, $price, $categories, $rating );
+        var yelpDiv = $('<div>').addClass('yelpDiv');
+        var yelpImg = $('<div>').addClass('yelpImg');
+        var yelpInfo = $('<div>').addClass('yelpInfo');
+        var yesNoDiv = $('<div>').addClass('yesNoButtons');
+        var yes = $('<button>').addClass('yelpYes').attr("data-url", yelpURL).html('<i class="fas fa-check"></i>');
+        var no = $('<button>').addClass('yelpNo').html('<i class="fas fa-times"></i>');
 
+        //$('#yelpYes').attr("data-url", yelpURL);
+        yelpImg.append( $img );
+        yelpInfo.append( $h2 , $address1, $address2, $phone, $price, $categories, $rating );
+        yesNoDiv.append( yes, no );
+        yelpDiv.append( yelpImg, yelpInfo, yesNoDiv );
+        $('.col1').append(yelpDiv);
       }
 
     }
@@ -555,9 +564,20 @@ function searchEdemam(food, count=1) {
       var $carbs = $('<p>').text( "Carbs (g): " + carbs );
       var $protein = $('<p>').text( "Protein (g): " + protein );
 
-      $('#edYes').attr("data-url", recipeURL);
-      $('#edImg').append( $img );
-      $('#edInfo').append( $h2, $cal, $fat, $carbs, $protein, $h3, $ingDiv );
+      var edDiv = $('<div>').addClass('edDiv');
+      var edImg = $('<div>').addClass('edImg');
+      var edInfo = $('<div>').addClass('edInfo');
+      var yesNoDiv = $('<div>').addClass('yesNoButtons');
+      var yes = $('<button>').addClass('edYes').attr("data-url", recipeURL).html('<i class="fas fa-check"></i>');
+      var no = $('<button>').addClass('edNo').html('<i class="fas fa-times"></i>');
+
+
+      //$('#edYes').attr("data-url", recipeURL);
+      edImg.append( $img );
+      edInfo.append( $h2, $cal, $fat, $carbs, $protein, $h3, $ingDiv );
+      yesNoDiv.append( yes, no );
+      edDiv.append( edImg, edInfo, yesNoDiv );
+      $('.col2').append(edDiv);
 
     }
 
@@ -565,22 +585,22 @@ function searchEdemam(food, count=1) {
 }
 
 
-$(document).on('click', '#yelpYes', function(){
+$(document).on('click', '.yelpYes', function(){
   window.open($(this).attr("data-url"));
 })
 
-$(document).on('click', '#yelpNo', function(){
+$(document).on('click', '.yelpNo', function(){
   console.log('yelp no -->>', this);
-  $(this).parent().remove();
+  $(this).parent().parent().remove();
 })
 
-$(document).on('click', '#edYes', function(){
+$(document).on('click', '.edYes', function(){
   window.open($(this).attr("data-url"));
 })
 
-$(document).on('click', '#edNo', function(){
-  console.log('yelp no -->>', this);
-  $(this).parent().remove();
+$(document).on('click', '.edNo', function(){
+  console.log('ed no -->>', this);
+  $(this).parent().parent().remove();
 })
 
 // var slideIndex = 1;
