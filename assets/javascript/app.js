@@ -1,4 +1,3 @@
-
 $("#LogSignButton").click(function(){
   $("#formDiv").slideToggle();
 });
@@ -229,7 +228,7 @@ function showInputForm(userId){
       $(".restrictions:checked").each(function() {
           restrictionsArray.push($(this).val());
       });
-  
+      
       firebase.database().ref('/users/' + userId).set({restrictions: restrictionsArray,foods: foodsArray})
       //clean up
       $(document).off('click', '#input-submit-btn');
@@ -309,7 +308,7 @@ function showDecidePage() {
 }
 
 
-function showPick(food, location, pos) {
+function showPick(food, location) {
   var showInId = '#frontPage';
   var oldDiv = $(showInId).html();
   
@@ -524,7 +523,8 @@ function searchEdemam(food, count=1) {
     q: food,
     to: count,
     app_id: appId,
-    app_key: appKey
+    app_key: appKey,
+    health: whattoeat.profile.restrictions
   });
 
   $.ajax({
