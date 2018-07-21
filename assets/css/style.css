@@ -181,6 +181,23 @@ html, body {
 
 /* end -- section = pickPage */
 
+/* start -- section = input Page */
+#inputForm div {
+  margin-bottom: 10px;
+}
+
+#inputForm h1 {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 2rem;
+  color: white;
+}
+
+#inputForm h2 {
+  font-family: 'Abril Fatface', cursive;
+}
+
+/* end -- section = input Page */
+
 
 footer {
   position: fixed;
