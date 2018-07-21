@@ -569,7 +569,7 @@ $(document).on('click', '#yelpYes', function(){
   window.open($(this).attr("data-url"));
 })
 
-$(document).on('click', '.yelp-div .no', function(){
+$(document).on('click', '#yelpNo', function(){
   console.log('yelp no -->>', this);
   $(this).parent().remove();
 })
@@ -578,7 +578,7 @@ $(document).on('click', '#edYes', function(){
   window.open($(this).attr("data-url"));
 })
 
-$(document).on('click', '.edamam-div .no', function(){
+$(document).on('click', '#edNo', function(){
   console.log('yelp no -->>', this);
   $(this).parent().remove();
 })
