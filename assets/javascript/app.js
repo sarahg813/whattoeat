@@ -318,7 +318,7 @@ function showPick(food, location, pos) {
     $('#foodPick').text("How about this " + food.toLowerCase() + " restaurant or recipe?");
     searchYelp( food, location );
     searchEdemam( food );  
-    $('#pickInfo').append( $('<button id="pick-change-btn">').text('Change') )
+    $('#pickInfo').append( $('<button id="pick-change-btn">').text('change') )
   });
 
   $(document).on('click', '#pick-change-btn', function() {
