@@ -32,31 +32,31 @@
           <h2>Dietary Restrictions:</h2>
           <div>
           <div class="inputBox">
-          <input type="checkbox" id="restriction1" class="restricitons" value="dairy-free">
+          <input type="checkbox" id="restriction1" class="restrictions" value="dairy-free">
           <label for="restriction1">Dairy-free</label>
-          <input type="checkbox" id="restriction2" class="restricitons" value="peanut-free">
+          <input type="checkbox" id="restriction2" class="restrictions" value="peanut-free">
           <label for="restriction2">Peanut-free</label>
-          <input type="checkbox" id="restriction3" class="restricitons" value="wheat-free">
+          <input type="checkbox" id="restriction3" class="restrictions" value="wheat-free">
           <label for="restriction3">Wheat-free</label>
-          <input type="checkbox" id="restriction4" class="restricitons" value="soy-free">
+          <input type="checkbox" id="restriction4" class="restrictions" value="soy-free">
           <label for="restriction4">Soy-free</label>
           </div>
           <div class="inputBox">
-          <input type="checkbox" id="restriction5" class="restricitons" value="fish-free">
+          <input type="checkbox" id="restriction5" class="restrictions" value="fish-free">
           <label for="restriction5">Fish-free</label>
-          <input type="checkbox" id="restriction6" class="restricitons" value="shellfish-free">
+          <input type="checkbox" id="restriction6" class="restrictions" value="shellfish-free">
           <label for="restriction6">Shellfish-free</label>
-          <input type="checkbox" id="restriction7" class="restricitons" value="tree-nut-free">
+          <input type="checkbox" id="restriction7" class="restrictions" value="tree-nut-free">
           <label for="restriction7">Tree-Nut-free</label>
-          <input type="checkbox" id="restriction8" class="restricitons" value="gluten-free">
+          <input type="checkbox" id="restriction8" class="restrictions" value="gluten-free">
           <label for="restriction8">Gluten-free</label>
           </div>
           <div class="inputBox">
-          <input type="checkbox" id="restriction9" class="restricitons" value="egg-free">
+          <input type="checkbox" id="restriction9" class="restrictions" value="egg-free">
           <label for="restriction9">Egg-free</label>
-          <input type="checkbox" id="restriction10" class="restricitons" value="fat-free">
+          <input type="checkbox" id="restriction10" class="restrictions" value="fat-free">
           <label for="restriction10">Fat-free</label>
-          <input type="checkbox" id="restriction11" class="restricitons" value="low-sugar">
+          <input type="checkbox" id="restriction11" class="restrictions" value="low-sugar">
           <label for="restriction11">Low-sugar</label>
           </div>
           </div>
@@ -99,7 +99,7 @@
                 vegArray.push($(this).val());
             });
              var restrictionsArray = [];
-            $(".restricitons:checked").each(function() {
+            $(".restrictions:checked").each(function() {
                 restrictionsArray.push($(this).val());
             });
             console.log(fn, ln, meatArray, vegArray, restrictionsArray); 

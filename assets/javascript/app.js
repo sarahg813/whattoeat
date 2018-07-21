@@ -226,7 +226,7 @@ function showInputForm(userId){
       });
 
       var restrictionsArray = [];
-      $(".restricitons:checked").each(function() {
+      $(".restrictions:checked").each(function() {
           restrictionsArray.push($(this).val());
       });
   
@@ -315,7 +315,7 @@ function showPick(food, location, pos) {
   
   $(showInId).load('pick.html #pickPage', function(){
     $('#currAddress').text(location);
-    $('#foodPick').text("You choose " + food);
+    $('#foodPick').text("How about this " + food.toLowerCase() + " restaurant or recipe?");
     searchYelp( food, location );
     searchEdemam( food );  
     $('#pickInfo').append( $('<button id="pick-change-btn">').text('Change') )
