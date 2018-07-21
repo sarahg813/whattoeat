@@ -5,68 +5,77 @@
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 <body>
-  <div id="input-div">
-    <div class="container">
-        <form>
-          <h1>What Do You Wanna Eat?!</h1>
-          <input id="inputFirstNameInput" type="text" placeholder="First Name">
-          <input id="inputLastNameInput" type="text" placeholder="Last Name">
-          <br>
-          <!-- <br> -->
-          <!--   <input type="email"  placeholder="Email" id="email">
-          <input type="password"  placeholder="Password" id="ps"><br> -->
-          <!-- <p>Are you diabetic?</p>
-          <input type="radio" value="yes"> Yes
-          <input type="radio" value="no"> No -->
-          <h2>Prefer Proteins:</h2>
-          <input type="checkbox" id="protein1" class="meats" value="Beef"> Beef
-          <input type="checkbox" id="protein2" class="meats" value="Chicken"> Chicken
-          <input type="checkbox" id="protein3" class="meats" value="Fish"> Fish
-          <input type="checkbox" id="protein4" class="meats" value="Shellfish">Shellfish <br>
-          <h2>Prefer Vegan/Vegeratian:</h2>
-          <input type="checkbox" id="protein5" class="veg" value="Tofu"> Tofu
-          <input type="checkbox" id="protein6" class="veg" value="Eggs"> Eggs
-          <input type="checkbox" id="protein7" class="veg" value="Lentil"> Lentils
-          <input type="checkbox" id="protein8" class="veg" value="Tempeh"> Tempeh 
-          <br>
-          <h2>Dietary Restrictions:</h2>
-          <div>
-          <div class="inputBox">
-          <input type="checkbox" id="restriction1" class="restrictions" value="dairy-free">
-          <label for="restriction1">Dairy-free</label>
-          <input type="checkbox" id="restriction2" class="restrictions" value="peanut-free">
-          <label for="restriction2">Peanut-free</label>
-          <input type="checkbox" id="restriction3" class="restrictions" value="wheat-free">
-          <label for="restriction3">Wheat-free</label>
-          <input type="checkbox" id="restriction4" class="restrictions" value="soy-free">
-          <label for="restriction4">Soy-free</label>
-          </div>
-          <div class="inputBox">
-          <input type="checkbox" id="restriction5" class="restrictions" value="fish-free">
-          <label for="restriction5">Fish-free</label>
-          <input type="checkbox" id="restriction6" class="restrictions" value="shellfish-free">
-          <label for="restriction6">Shellfish-free</label>
-          <input type="checkbox" id="restriction7" class="restrictions" value="tree-nut-free">
-          <label for="restriction7">Tree-Nut-free</label>
-          <input type="checkbox" id="restriction8" class="restrictions" value="gluten-free">
-          <label for="restriction8">Gluten-free</label>
-          </div>
-          <div class="inputBox">
-          <input type="checkbox" id="restriction9" class="restrictions" value="egg-free">
-          <label for="restriction9">Egg-free</label>
-          <input type="checkbox" id="restriction10" class="restrictions" value="fat-free">
-          <label for="restriction10">Fat-free</label>
-          <input type="checkbox" id="restriction11" class="restrictions" value="low-sugar">
-          <label for="restriction11">Low-sugar</label>
-          </div>
-          </div>
-          <br>
-          <button id="input-submit-btn" type="submit">Submit</button>
-          <button id="input-cancel-btn" type="cancel">Cancel</button>
-          <!-- <input type="reset" value="Reset"> -->
-        </form>
+    <div id="input-div">
+        <div class="container">
+            <form id="inputForm">
+                <h1>What Do You Wanna Eat?!</h1>
+                <div id="nameInputDiv">
+                    <input id="inputFirstNameInput" type="text" placeholder="First Name">
+                    <input id="inputLastNameInput" type="text" placeholder="Last Name">
+                </div>
+                <!-- <br> -->
+                <!--   <input type="email"  placeholder="Email" id="email">
+                <input type="password"  placeholder="Password" id="ps"><br> -->
+                <!-- <p>Are you diabetic?</p>
+                <input type="radio" value="yes"> Yes
+                <input type="radio" value="no"> No -->
+                <div id="proteinDiv">
+                    <h2>Prefer Proteins:</h2>
+                    <input type="checkbox" id="protein1" class="meats" value="Beef"> Beef
+                    <input type="checkbox" id="protein2" class="meats" value="Chicken"> Chicken
+                    <input type="checkbox" id="protein3" class="meats" value="Fish"> Fish
+                    <input type="checkbox" id="protein4" class="meats" value="Shellfish">Shellfish <br>
+                </div>
+                <div id="vegPref">
+                    <h2>Prefer Vegan/Vegetarian:</h2>
+                    <input type="checkbox" id="protein5" class="veg" value="Tofu"> Tofu
+                    <input type="checkbox" id="protein6" class="veg" value="Eggs"> Eggs
+                    <input type="checkbox" id="protein7" class="veg" value="Lentil"> Lentils
+                    <input type="checkbox" id="protein8" class="veg" value="Tempeh"> Tempeh 
+                </div>
+
+                <div id="dietRestrictions">
+                    <h2>Dietary Restrictions:</h2>
+                    <div id="inputContainer">
+                        <div class="inputBox">
+                            <input type="checkbox" id="restriction1" class="restrictions" value="dairy-free">
+                            <label for="restriction1">Dairy-free</label>
+                            <input type="checkbox" id="restriction2" class="restrictions" value="peanut-free">
+                            <label for="restriction2">Peanut-free</label>
+                            <input type="checkbox" id="restriction3" class="restrictions" value="wheat-free">
+                            <label for="restriction3">Wheat-free</label>
+                            <input type="checkbox" id="restriction4" class="restrictions" value="soy-free">
+                            <label for="restriction4">Soy-free</label>
+                        </div>
+                        <div class="inputBox">
+                            <input type="checkbox" id="restriction5" class="restrictions" value="fish-free">
+                            <label for="restriction5">Fish-free</label>
+                            <input type="checkbox" id="restriction6" class="restrictions" value="shellfish-free">
+                            <label for="restriction6">Shellfish-free</label>
+                            <input type="checkbox" id="restriction7" class="restrictions" value="tree-nut-free">
+                            <label for="restriction7">Tree-Nut-free</label>
+                            <input type="checkbox" id="restriction8" class="restrictions" value="gluten-free">
+                            <label for="restriction8">Gluten-free</label>
+                        </div>
+                        <div class="inputBox">
+                            <input type="checkbox" id="restriction9" class="restrictions" value="egg-free">
+                            <label for="restriction9">Egg-free</label>
+                            <input type="checkbox" id="restriction10" class="restrictions" value="fat-free">
+                            <label for="restriction10">Fat-free</label>
+                            <input type="checkbox" id="restriction11" class="restrictions" value="low-sugar">
+                            <label for="restriction11">Low-sugar</label>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button class="decideButtons" id="input-submit-btn" type="submit">Submit</button>
+                    <button class="decideButtons" id="input-cancel-btn" type="cancel">Cancel</button>
+                </div>
+                <!-- <input type="reset" value="Reset"> -->
+            </form>
+        </div>
     </div>
-  </div>
+
     <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
     <script>
       // Initialize Firebase
